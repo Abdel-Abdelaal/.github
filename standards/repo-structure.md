@@ -7,6 +7,7 @@
 | Service | [shortlink](https://github.com/Abdel-Abdelaal/shortlink) | a deployable app or API |
 | Library | (none yet) | a package other code installs |
 | Platform | [platform-workflows](https://github.com/Abdel-Abdelaal/platform-workflows) | shared CI/CD workflows |
+| Governance | [github-governance](https://github.com/Abdel-Abdelaal/github-governance) | repository settings and fleet evidence |
 | Standards | this repo | the handbook and default community files |
 
 ## Naming repos
@@ -83,3 +84,16 @@ separate dotfiles.
 - Secrets in CI are GitHub Actions secrets, scoped to an environment where possible.
 
 Remote workflow pinning follows [ADR 0003](../docs/decisions/0003-pin-controlled-workflow-releases.md).
+
+## Shared configuration and conformance
+
+`baseline/` is the reviewed source for common files. `.baseline-ignore` documents
+exact path exceptions. Python repos extend `ruff-base.toml` and carry a strict
+Pyright base; local configuration may strengthen or specialize it.
+`opencode.json` contains environment references only, never credentials.
+
+The conformance tool checks tracked ownership/community files, glossary, lockfiles,
+full-SHA remote workflow/action and hook references, empty default token permissions,
+explicit secrets and a minimum 14-day cooldown for every dependency ecosystem.
+It parses configuration as data and never executes repository code. Malformed input
+fails closed. Actionlint, zizmor, CodeQL and the secret scanner provide deeper checks.
