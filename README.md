@@ -32,3 +32,12 @@ says which. The CI checks live in
 
 Open a PR here. A standard changes when the tool or check that enforces it changes in
 the same release, so the written rule and the enforced rule never drift apart.
+
+## Advisory AI maintenance
+
+Same-repository PRs receive an isolated MiMo 2.6 Flash review; fork and Dependabot
+PRs skip. Findings are non-blocking summaries and neutral notice annotations.
+Weekly audits maintain one health issue. A bounded, tested draft fix PR is possible
+only after the automation App is configured; otherwise that step skips explicitly.
+No AI check is required for merging, and no AI workflow can merge or approve.
+See [the isolation design](https://github.com/Abdel-Abdelaal/platform-workflows/blob/main/docs/ai.md).
