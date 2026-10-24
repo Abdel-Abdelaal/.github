@@ -15,9 +15,9 @@ Before `1.0.0`, breaking changes bump minor. `1.0.0` means the API is stable.
 ## Tags and releases
 
 - Every release is a git tag `vX.Y.Z` with a GitHub Release.
-- Reusable workflows and actions also have a moving major tag (`v1`) that points at
-  the latest `v1.x.y`, so callers get fixes without editing anything.
-- Third-party actions are pinned to a full commit SHA with the version in a comment.
+- Reusable workflows publish a moving major tag (`v1`) for discovery. Managed
+  callers pin release commit SHAs; Dependabot proposes reviewed updates.
+- All remote actions and workflows are pinned to a full commit SHA with the version in a comment.
   Tags can be moved; SHAs can't.
 
 ## Changelog
@@ -26,3 +26,5 @@ Before `1.0.0`, breaking changes bump minor. `1.0.0` means the API is stable.
 by [release-please](https://github.com/googleapis/release-please) from the commit
 types on `main`: it keeps a release PR open with the next version and changelog, and
 merging that PR tags the release. Nobody edits the version or changelog by hand.
+
+Remote workflow pinning follows [ADR 0003](../docs/decisions/0003-pin-controlled-workflow-releases.md).
