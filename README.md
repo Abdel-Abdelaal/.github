@@ -1,0 +1,34 @@
+# Engineering standards
+
+How I write, review and ship code across every repo under
+[@Abdel-Abdelaal](https://github.com/Abdel-Abdelaal). Two jobs:
+
+1. **The handbook** in [`standards/`](standards/): the written rules for commits, PRs,
+   issues, code review, Python code, repo layout, versioning, decisions and AI use.
+2. **Default community files.** GitHub uses the issue templates, PR template,
+   `CONTRIBUTING.md` and `SECURITY.md` in this special `.github` repo for any of my
+   repos that doesn't have its own. Every repo gets them without copying.
+
+Most rules here are enforced by a tool or a CI check, not by memory. Each standard
+says which. The CI checks live in
+[platform-workflows](https://github.com/Abdel-Abdelaal/platform-workflows).
+
+## The handbook
+
+| Standard | Covers | Built on |
+|---|---|---|
+| [Commits](standards/commits.md) | commit messages, PR titles | [Conventional Commits 1.0](https://www.conventionalcommits.org/) |
+| [Pull requests](standards/pull-requests.md) | size, description, merge flow | [Google eng-practices](https://google.github.io/eng-practices/) |
+| [Code review](standards/code-review.md) | what reviewers look for, comment format | [Google eng-practices](https://google.github.io/eng-practices/review/), [Conventional Comments](https://conventionalcomments.org/) |
+| [Issues](standards/issues.md) | tickets, labels, acceptance criteria | GitHub issue forms, labels as code |
+| [Python](standards/python.md) | naming, comments, docstrings, types, duplication | [PEP 8](https://peps.python.org/pep-0008/), [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html), [Ruff](https://docs.astral.sh/ruff/) |
+| [Repo structure](standards/repo-structure.md) | layout and required files per repo type | [PyPA src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/), [Standard Readme](https://github.com/RichardLitt/standard-readme) |
+| [Versioning](standards/versioning.md) | releases, tags, changelogs | [SemVer 2.0](https://semver.org/), [Keep a Changelog](https://keepachangelog.com/) |
+| [Decisions](standards/decisions.md) | recording why we chose something | [MADR](https://adr.github.io/madr/) |
+| [AI](standards/ai.md) | where AI runs, API keys, what it may do | [AGENTS.md](https://agents.md/), [opencode](https://opencode.ai/) |
+| [Governance](standards/governance.md) | how everything is re-checked and kept current, settings as code | Terraform, Dependabot, OpenSSF Scorecard |
+
+## Changing a standard
+
+Open a PR here. A standard changes when the tool or check that enforces it changes in
+the same release, so the written rule and the enforced rule never drift apart.
