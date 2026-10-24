@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/Abdel-Abdelaal/.github/blob/main/SECURITY.md
+    about: Follow the policy to report privately in the affected repository.
