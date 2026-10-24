@@ -53,8 +53,9 @@ Scheduled jobs never fail silently: a failing schedule opens or updates an issue
   (the usual window for compromised packages) aren't picked up. Patch and minor updates
   auto-merge once all checks pass. Majors wait for a human.
 - **Pinned SHAs** are updated by Dependabot, which rewrites the SHA and the version comment.
-- **Reusable workflows:** repos call `@v1`. A platform release moves `v1`, so every
-  repo picks up the fix on its next run. A new major version comes as a Dependabot PR.
+- **Reusable workflows:** repos pin full release commit SHAs with version comments.
+  Dependabot proposes platform release updates, including majors, as reviewed PRs.
+  Reverting the caller pin restores the previous known platform implementation.
 - **Pre-commit hooks:** a weekly job runs `pre-commit autoupdate` and opens a PR.
 - **Baseline files:** a weekly job copies `.github/baseline/` into each repo and opens
   a PR if anything differs. Editing a baseline file in one repo directly gets
@@ -99,3 +100,5 @@ The same AI runner, configured once in the baseline `opencode.json`, does:
 
 It runs anywhere the key is in the environment: GitHub Actions, a laptop, a server.
 See [AI](ai.md).
+
+Remote workflow pinning follows [ADR 0003](../docs/decisions/0003-pin-controlled-workflow-releases.md).
