@@ -7,7 +7,7 @@ before editing. Scope for this showcase is D:/showcase only.
 
 - Validate: parse YAML, check Markdown links and inspect `git diff --check`.
 - Every change goes through a Conventional Commit PR; never push directly to main.
-- Actions use full commit SHAs; shared platform workflows use `@v1`.
+- All remote actions and reusable workflows use full commit SHAs with release comments.
 
 ## Glossary
 
