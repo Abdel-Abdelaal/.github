@@ -1,0 +1,3 @@
+# Handbook has no Python package; keep the generic frozen hooks.
+ruff-base.toml
+pyrightconfig.base.json
