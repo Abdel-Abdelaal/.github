@@ -43,8 +43,8 @@ are reviewed desired state, awaiting hosted-state migration and the governance A
 HCP/App reconciliation, Sonar analysis, maintenance App PR creation, access metadata
 and live deployment must not be described as active until configured and verified.
 Missing setup skips explicitly. Three read-only fleet reports run live in
-`github-governance` today: the weekly dependency inventory and fleet health, and
-the monthly access review. On the workflow token, the access review marks
+`github-governance` today: the weekly dependency inventory, the daily fleet health,
+and the monthly access review. On the workflow token, the access review marks
 admin-only sections as skipped. There is currently no hosted settings drift
 coverage or automatic apply. Dependabot version/security PR creation works without
 maintenance App credentials. Auto-merge stays disabled pending a safe, verified
@@ -61,7 +61,7 @@ main-context controller; generated titles may need normalization during review.
 | Weekly (Monday) | Dependabot (14-day cooldown), baseline file sync, pre-commit hook updates, CodeQL full scan, OpenSSF Scorecard, AI health audit of the whole codebase, stale issue/PR sweep | PRs, one "Weekly health report" issue per repo |
 | Monthly (1st) | AI review of the handbook against current tools and real practice, access review (collaborators, apps, deploy keys, secrets ages) | PR to `.github`, issue in `github-governance` |
 | Weekly (Monday 06:30) | dependency inventory: every pinned dependency and upstream project, with archive status, last push and newest release | "Dependency inventory" issue in `github-governance` |
-| Weekly (Monday 06:45) | fleet summary: live vs desired required checks, failing latest runs, open governance issues, open PRs, Scorecard score per repo | "Fleet health" issue in `github-governance` |
+| Daily (06:45) | fleet summary: public repos missing from `repos.yaml` (unmanaged), required files and platform-workflows callers, live vs desired required checks, failing latest runs, open governance issues, open PRs, Scorecard score per repo | "Fleet health" issue in `github-governance` |
 
 Scheduled jobs never fail silently: a failing schedule opens or updates an issue.
 

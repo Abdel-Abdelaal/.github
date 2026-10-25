@@ -1,6 +1,7 @@
 # The handbook repo consumes its own baseline. If a root copy is updated (for
 # example by Dependabot) without the baseline source, the next weekly sync would
-# push the older file to every repo. This fails the PR instead.
+# push the older file to every repo. This fails the PR instead. The same goes for
+# the new-repo starter's caller workflows, which Dependabot also can't see.
 name: Baseline consistency
 on:
   pull_request:
@@ -35,6 +36,15 @@ jobs:
             # The canonical label catalog lives under .github/ in this repo.
             target=$relative
             [ "$relative" = labels.yml ] && target=.github/labels.yml
+            # The new-repo starter's callers must keep this repo's pins. Its other
+            # files are templates a new repo fills in.
+            case $relative in
+              new-repo/.github/workflows/*) target=${relative#new-repo/} ;;
+              new-repo/*)
+                echo "skip  $relative (new-repo template)"
+                continue
+                ;;
+            esac
             if cmp -s "$source" "$target"; then
               echo "same  $relative"
             else

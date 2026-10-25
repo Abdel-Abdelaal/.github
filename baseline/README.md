@@ -8,6 +8,9 @@ unknown entries fail closed. Exceptions are visible and reviewed with the repo.
 - Common: LF attributes, editor settings, provider configuration, Scorecard caller.
 - Python: Ruff base, strict Pyright base and frozen pre-commit revisions.
 - `labels.yml`: Terraform source reference; fleet label writes remain governance-owned.
+- `new-repo/`: the starter a new repo copies once (callers, CODEOWNERS, Dependabot,
+  LICENSE, templates). It isn't synced; see
+  [Starting a new repo](../standards/repo-structure.md#starting-a-new-repo).
 
 Bot PR creation requires the automation App. Missing credentials skip explicitly;
 there is no personal-token fallback. All copied changes run normal required CI.
