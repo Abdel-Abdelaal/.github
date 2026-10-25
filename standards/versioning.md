@@ -5,7 +5,7 @@
 [Semantic Versioning 2.0](https://semver.org/): `MAJOR.MINOR.PATCH`.
 
 | Bump | When | Comes from |
-|---|---|---|
+| --- | --- | --- |
 | major | breaking change | `!` or a `BREAKING CHANGE:` footer |
 | minor | new feature | `feat` |
 | patch | bug fix or performance improvement | `fix`, `perf` |
