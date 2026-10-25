@@ -41,33 +41,33 @@ so tests run against the installed package, not loose files that happen to be on
 
 ```
 shortlink/
-â”œâ”€â”€ .github/
-â”‚   â”œâ”€â”€ CODEOWNERS
-â”‚   â””â”€â”€ workflows/
-â”œâ”€â”€ docs/
-â”‚   â””â”€â”€ decisions/          # ADRs, see decisions.md
-â”œâ”€â”€ src/
-â”‚   â””â”€â”€ shortlink/
-â”‚       â”œâ”€â”€ __init__.py
-â”‚       â”œâ”€â”€ main.py         # app factory and wiring only
-â”‚       â”œâ”€â”€ api/            # routes: HTTP in, HTTP out
-â”‚       â”œâ”€â”€ domain/         # business rules, no FastAPI or DB imports
-â”‚       â”œâ”€â”€ db/             # persistence
-â”‚       â””â”€â”€ settings.py     # config from environment variables
-â”œâ”€â”€ tests/
-â”‚   â”œâ”€â”€ unit/               # domain logic, fast, no I/O
-â”‚   â””â”€â”€ integration/        # API + DB together
-â”œâ”€â”€ .editorconfig
-â”œâ”€â”€ .gitattributes
-â”œâ”€â”€ .gitignore
-â”œâ”€â”€ .pre-commit-config.yaml
-â”œâ”€â”€ .python-version
-â”œâ”€â”€ AGENTS.md
-â”œâ”€â”€ CHANGELOG.md            # generated, see versioning.md
-â”œâ”€â”€ LICENSE
-â”œâ”€â”€ pyproject.toml          # dependencies and all tool config
-â”œâ”€â”€ README.md
-â””â”€â”€ uv.lock
+├── .github/
+│   ├── CODEOWNERS
+│   └── workflows/
+├── docs/
+│   └── decisions/          # ADRs, see decisions.md
+├── src/
+│   └── shortlink/
+│       ├── __init__.py
+│       ├── main.py         # app factory and wiring only
+│       ├── api/            # routes: HTTP in, HTTP out
+│       ├── domain/         # business rules, no FastAPI or DB imports
+│       ├── db/             # persistence
+│       └── settings.py     # config from environment variables
+├── tests/
+│   ├── unit/               # domain logic, fast, no I/O
+│   └── integration/        # API + DB together
+├── .editorconfig
+├── .gitattributes
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .python-version
+├── AGENTS.md
+├── CHANGELOG.md            # generated, see versioning.md
+├── LICENSE
+├── pyproject.toml          # dependencies and all tool config
+├── README.md
+└── uv.lock
 ```
 
 Dependencies point inward: `api` and `db` may import `domain`, and `domain` imports
