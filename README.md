@@ -26,6 +26,7 @@ says which. The CI checks live in
 | [Versioning](standards/versioning.md) | releases, tags, changelogs | [SemVer 2.0](https://semver.org/), [Keep a Changelog](https://keepachangelog.com/) |
 | [Decisions](standards/decisions.md) | recording why we chose something | [MADR](https://adr.github.io/madr/) |
 | [AI](standards/ai.md) | where AI runs, API keys, what it may do | [AGENTS.md](https://agents.md/), [opencode](https://opencode.ai/) |
+| [Languages](standards/languages.md) | which tool checks which language, for every repo automatically | [super-linter](https://github.com/super-linter/super-linter), CodeQL, language toolchains |
 | [Governance](standards/governance.md) | how everything is re-checked and kept current, settings as code | Terraform, Dependabot, OpenSSF Scorecard |
 
 ## Changing a standard
