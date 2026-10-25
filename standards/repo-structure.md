@@ -27,9 +27,10 @@ No `-repo`, `-project`, or `my-`.
 | `.github/workflows/` | CI that calls [platform-workflows](https://github.com/Abdel-Abdelaal/platform-workflows) |
 | `AGENTS.md` | context for AI agents: commands, layout, glossary, rules (see [AI](ai.md)) |
 | `CLAUDE.md` | `@AGENTS.md`, so Claude Code reads the same context |
-| `opencode.json` | AI review provider config, environment references only |
+| `opencode.json` | opencode CLI provider config for local use, environment references only. CI review uses the platform runner's own config. |
 
-Conformance fails a PR when any of these is missing. Fleet health in
+Conformance (platform-workflows v1.6.0, `REQUIRED` in `tools/conformance.py`) fails
+a PR when any of these is missing. Fleet health in
 [github-governance](https://github.com/Abdel-Abdelaal/github-governance) checks them
 daily on `main`, together with the five callers below.
 

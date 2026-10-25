@@ -26,30 +26,45 @@ jobs:
       - name: Compare every baseline file with its root copy
         run: |
           status=0
+          starter_callers=0
           while IFS= read -r source; do
             relative=${source#baseline/}
             [ "$relative" = README.md ] && continue
-            if grep -qxF "$relative" .baseline-ignore; then
-              echo "skip  $relative (listed in .baseline-ignore)"
-              continue
-            fi
             # The canonical label catalog lives under .github/ in this repo.
             target=$relative
             [ "$relative" = labels.yml ] && target=.github/labels.yml
-            # The new-repo starter's callers must keep this repo's pins. Its other
-            # files are templates a new repo fills in.
+            # The new-repo starter's callers must keep this repo's pins, and
+            # .baseline-ignore can't exempt them. Its other files are templates a
+            # new repo fills in.
             case $relative in
-              new-repo/.github/workflows/*) target=${relative#new-repo/} ;;
+              new-repo/.github/workflows/*)
+                target=${relative#new-repo/}
+                starter_callers=$((starter_callers + 1))
+                ;;
               new-repo/*)
                 echo "skip  $relative (new-repo template)"
                 continue
                 ;;
+              *)
+                if grep -qxF "$relative" .baseline-ignore; then
+                  echo "skip  $relative (listed in .baseline-ignore)"
+                  continue
+                fi
+                ;;
             esac
-            if cmp -s "$source" "$target"; then
+            if [ ! -f "$target" ]; then
+              echo "::error file=$source::$target is missing; $source must have a root copy"
+              status=1
+            elif cmp -s "$source" "$target"; then
               echo "same  $relative"
             else
               echo "::error file=$source::$source differs from $target; update both in the same PR"
               status=1
             fi
           done < <(git ls-files baseline)
+          # pr, security, conformance, scorecard and ai-review.
+          if [ "$starter_callers" -ne 5 ]; then
+            echo "::error::expected 5 new-repo starter callers, compared $starter_callers"
+            status=1
+          fi
           exit "$status"
