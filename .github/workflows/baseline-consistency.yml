@@ -1,0 +1,45 @@
+# The handbook repo consumes its own baseline. If a root copy is updated (for
+# example by Dependabot) without the baseline source, the next weekly sync would
+# push the older file to every repo. This fails the PR instead.
+name: Baseline consistency
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions: {}
+jobs:
+  compare:
+    name: Baseline matches root
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Compare every baseline file with its root copy
+        run: |
+          status=0
+          while IFS= read -r source; do
+            relative=${source#baseline/}
+            [ "$relative" = README.md ] && continue
+            if grep -qxF "$relative" .baseline-ignore; then
+              echo "skip  $relative (listed in .baseline-ignore)"
+              continue
+            fi
+            # The canonical label catalog lives under .github/ in this repo.
+            target=$relative
+            [ "$relative" = labels.yml ] && target=.github/labels.yml
+            if cmp -s "$source" "$target"; then
+              echo "same  $relative"
+            else
+              echo "::error file=$source::$source differs from $target; update both in the same PR"
+              status=1
+            fi
+          done < <(git ls-files baseline)
+          exit "$status"

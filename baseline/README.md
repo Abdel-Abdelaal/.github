@@ -12,3 +12,7 @@ unknown entries fail closed. Exceptions are visible and reviewed with the repo.
 Bot PR creation requires the automation App. Missing credentials skip explicitly;
 there is no personal-token fallback. All copied changes run normal required CI.
 Hook updates propose changes in this source first, then the next sync distributes them.
+
+This repo uses its own baseline. The `Baseline matches root` check fails any PR where
+a baseline file and this repo's root copy differ, so a root-only update (Dependabot
+only scans `/`) can't leave an older baseline to be synced out to the fleet.
