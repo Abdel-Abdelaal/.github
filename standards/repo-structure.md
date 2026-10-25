@@ -86,6 +86,14 @@ from `baseline/` itself.
    cp .github/baseline/ruff-base.toml .github/baseline/pyrightconfig.base.json .github/baseline/.pre-commit-config.yaml NAME/
    ```
 
+   uv projects also copy the super-linter ruff config, which extends
+   `pyproject.toml`. Without it super-linter runs ruff on its own defaults and
+   disagrees with the local ruff:
+
+   ```bash
+   mkdir -p NAME/.github/linters && cp .github/baseline/.github/linters/.ruff.toml NAME/.github/linters/
+   ```
+
    Then:
    - add the repo's languages to `languages` in `security.yml`, for example
      `'["actions", "python"]'`
