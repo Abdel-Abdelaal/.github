@@ -125,7 +125,7 @@ keep pinned, and its caller pins would drift without a check. Copying from
 Uses the [src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/),
 so tests run against the installed package, not loose files that happen to be on the path.
 
-```
+```text
 shortlink/
 ├── .github/
 │   ├── CODEOWNERS

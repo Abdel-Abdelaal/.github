@@ -24,7 +24,7 @@ better overall, even if it isn't how you'd have written it.
 Use [Conventional Comments](https://conventionalcomments.org/), so the author knows
 how much each comment matters:
 
-```
+```text
 <label> [decorations]: <subject>
 
 <optional discussion>
@@ -44,7 +44,7 @@ how much each comment matters:
 Decorations: `(blocking)` must be fixed before merge, `(non-blocking)` is optional,
 `(security)`, `(performance)` and `(test)` mark the area.
 
-```
+```text
 issue (blocking, security): the target URL isn't validated, so `javascript:` links
 get stored and served as redirects.
 

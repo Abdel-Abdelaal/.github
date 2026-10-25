@@ -23,7 +23,7 @@ Security problems are never filed as public issues. See [SECURITY.md](../SECURIT
 - **Acceptance criteria:** testable statements, in Given / When / Then form where it
   helps. They become the tests.
 
-  ```
+  ```text
   Given a link that expired yesterday
   When someone requests its short code
   Then the API returns 410 Gone

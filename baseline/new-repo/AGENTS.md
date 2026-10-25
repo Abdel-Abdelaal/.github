@@ -17,6 +17,7 @@ Follow the handbook: <https://github.com/Abdel-Abdelaal/.github/tree/main/standa
 ## Glossary
 
 One name per concept; use exactly these.
+
 | Name | Meaning | Never call it |
 | --- | --- | --- |
 | | | |

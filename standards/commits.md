@@ -4,7 +4,7 @@ Follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0
 
 ## Format
 
-```
+```text
 <type>(<optional scope>): <subject>
 
 <optional body: why, not what>
@@ -35,7 +35,7 @@ Follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0
 
 A breaking change adds `!` after the type and a footer:
 
-```
+```text
 feat(api)!: return 410 for expired links
 
 BREAKING CHANGE: clients that treated 404 as "expired" must handle 410.
@@ -61,7 +61,7 @@ BREAKING CHANGE: clients that treated 404 as "expired" must handle 410.
 
 ## Examples
 
-```
+```text
 feat: add custom short codes
 fix(redirect): return 404 for unknown codes
 build(deps): bump fastapi to 0.120
