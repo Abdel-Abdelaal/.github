@@ -32,7 +32,22 @@ flowchart LR
 Changing the system means a PR to one of these repos, reviewed and checked like any
 other change.
 
-## Cadences
+## Activation and evidence
+
+The cadence table is the target architecture. Deterministic CI/security checks and
+native scanning are active; the initial verified checks were enforced by a bounded
+operator bootstrap. Conformance passes on all four repos, and shortlink's first
+container release has verified public provenance/SBOM. Additional required contexts
+are reviewed desired state, awaiting hosted-state migration and the governance App.
+
+HCP/App reconciliation, Sonar analysis, maintenance App PR creation, access metadata
+and live deployment must not be described as active until configured and verified.
+Missing setup skips explicitly. There is currently no hosted settings drift
+coverage or automatic apply. Dependabot version/security PR creation works without
+maintenance App credentials. Auto-merge stays disabled pending a safe, verified
+main-context controller; generated titles may need normalization during review.
+
+## Target cadences
 
 | When | What runs | Where findings go |
 |---|---|---|
@@ -50,13 +65,17 @@ Scheduled jobs never fail silently: a failing schedule opens or updates an issue
 
 - **Dependencies and actions:** Dependabot in every repo for `uv`, `github-actions`,
   `docker` and `terraform`, weekly, with a **14-day cooldown** so brand-new releases
-  (the usual window for compromised packages) aren't picked up. Patch and minor updates
-  auto-merge once all checks pass. Majors wait for a human.
+  (a common window for compromised packages) are deferred. Security updates do not
+  wait for that version-update cooldown; they still pass normal checks and review.
+  Patch/minor auto-merge is a gated target, currently disabled. Majors stay manual.
 - **Pinned SHAs** are updated by Dependabot, which rewrites the SHA and the version comment.
 - **Reusable workflows:** repos pin full release commit SHAs with version comments.
   Dependabot proposes platform release updates, including majors, as reviewed PRs.
   Reverting the caller pin restores the previous known platform implementation.
-- **Pre-commit hooks:** a weekly job runs `pre-commit autoupdate` and opens a PR.
+- **Pre-commit hooks:** native Dependabot monitors `/baseline` here weekly with the
+  fourteen-day cooldown, retaining frozen SHAs and version comments. Conformance
+  rejects mutable revisions. No custom hook updater or separate App key is needed.
+  See [native ecosystem support](https://docs.github.com/en/code-security/reference/supply-chain-security/supported-ecosystems-and-repositories).
 - **Baseline files:** a weekly job copies `.github/baseline/` into each repo and opens
   a PR if anything differs. Editing a baseline file in one repo directly gets
   reverted by the next sync, unless the repo is listed as an exception.
@@ -65,32 +84,39 @@ Scheduled jobs never fail silently: a failing schedule opens or updates an issue
 
 ## Settings as code
 
-Repo settings, rulesets, labels, security features and environments are defined in
+Repo settings, rulesets, labels and security features are defined in
 `github-governance` (Terraform with the `integrations/github` provider). Editing them
-in the GitHub UI counts as drift: the nightly plan reports it, and the next apply
-reverts it. To change a setting, open a PR there.
+in the GitHub UI is a desired-state deviation. Once HCP/App setup is complete,
+the nightly plan should report it and a reviewed apply should reconcile it.
+Those hosted operations currently skip; a green setup check is not a drift audit. To change a setting, open a PR there.
 
 Break glass: the account owner can still disable a ruleset in the UI during an
-incident. Doing so opens a drift issue the next night, and that issue stays open
-until the code and reality match again.
+incident. Record the incident and restore protection promptly. Automatic drift reporting
+requires the hosted credentials and is not currently available.
 
 ## Bots and tokens
 
 | Identity | Permissions | Used for |
 |---|---|---|
 | `GITHUB_TOKEN` | per job, least privilege | all normal checks |
-| automation GitHub App | contents, pull requests, issues: write | baseline sync, hook updates, release-please, AI fix PRs (PRs from an App trigger CI; PRs from `GITHUB_TOKEN` don't) |
+| automation GitHub App | repo-scoped contents/PR/issues write; workflows write only for baseline changes | baseline sync, release-please, AI fix PRs (App PRs trigger CI; `GITHUB_TOKEN` PRs do not) |
 | governance GitHub App | administration: write, plus the above | Terraform in `github-governance` only |
 | AI API key | none on GitHub | AI review, audit and fixes |
 
 No personal access tokens. App private keys and the AI key are repository secrets,
-rotated every 90 days. The monthly access review checks their age.
+subject to a ninety-day rotation policy. GitHub secret `updated_at` measures the
+stored secret update, not necessarily the provider credential creation/rotation.
+The access review flags age and evidence gaps; it cannot prove rotation from that
+metadata alone.
 
 ## AI in the loop
 
-The same AI runner, configured once in the baseline `opencode.json`, does:
+The reviewed platform runner supplies its own isolated configuration. Baseline
+`opencode.json` is a portable example, not executable CI project configuration.
+The intended feedback loop is:
 
-- **PR review:** advisory comments on every PR.
+- **PR review:** advisory summaries/neutral notices for eligible same-repo PRs;
+  forks, Dependabot and missing-key cases skip.
 - **Weekly audit:** reads the whole repo against this handbook and the repo's
   `AGENTS.md` glossary, and reports duplication, inconsistent names, dead code, stale
   docs and missing tests in the weekly health report.

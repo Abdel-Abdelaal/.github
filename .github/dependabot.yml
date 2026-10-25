@@ -15,3 +15,18 @@ updates:
       include: scope
     labels: [dependencies]
     open-pull-requests-limit: 5
+  - package-ecosystem: pre-commit
+    directory: /baseline
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 14
+    groups:
+      compatible-hooks:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: build
+      include: scope
+    labels: [dependencies]
+    open-pull-requests-limit: 5
