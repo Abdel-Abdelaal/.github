@@ -23,8 +23,16 @@ No `-repo`, `-project`, or `my-`.
 | `LICENSE` | MIT unless there's a reason not to |
 | `.gitattributes` | `* text=auto eol=lf`, so Windows checkouts don't turn files into CRLF |
 | `.github/CODEOWNERS` | who reviews what |
+| `.github/dependabot.yml` | dependency updates, every ecosystem with a 14-day cooldown |
 | `.github/workflows/` | CI that calls [platform-workflows](https://github.com/Abdel-Abdelaal/platform-workflows) |
 | `AGENTS.md` | context for AI agents: commands, layout, glossary, rules (see [AI](ai.md)) |
+| `CLAUDE.md` | `@AGENTS.md`, so Claude Code reads the same context |
+| `opencode.json` | opencode CLI provider config for local use, environment references only. CI review uses the platform runner's own config. |
+
+Conformance (platform-workflows v1.6.0, `REQUIRED` in `tools/conformance.py`) fails
+a PR when any of these is missing. Fleet health in
+[github-governance](https://github.com/Abdel-Abdelaal/github-governance) checks them
+daily on `main`, together with the five callers below.
 
 `CONTRIBUTING.md`, `SECURITY.md`, issue templates and the PR template come from this
 `.github` repo automatically. A repo only adds its own copy to override one.
@@ -33,6 +41,83 @@ No `-repo`, `-project`, or `my-`.
 
 Every path has an owner. The owner is requested for review automatically, and on team
 repos their approval is required by the branch rules.
+
+## Starting a new repo
+
+Every new public repo joins the fleet. Fleet health lists any public repo that isn't
+a fork, isn't archived and is missing from `github-governance/repos.yaml` as
+**unmanaged** until it's onboarded. This account is personal, so no account-wide
+ruleset can do it on creation (see
+[Moving to a GitHub organisation](https://github.com/Abdel-Abdelaal/github-governance/blob/main/docs/setup.md#moving-to-a-github-organisation)).
+
+The starter is [`baseline/new-repo/`](../baseline/new-repo). Its callers are
+byte-identical to this repo's own and pinned to the same platform-workflows release
+by full SHA. `Baseline matches root` fails any PR that lets them drift.
+
+| Starter file | Calls |
+|---|---|
+| `.github/workflows/pr.yml` | `pr-title.yml` (Conventional title) |
+| `.github/workflows/security.yml` | `security.yml` (CodeQL, dependency review, secrets, workflow lint) |
+| `.github/workflows/conformance-checks.yml` | `conformance.yml` (required files, pins, cooldowns) |
+| `.github/workflows/scorecard.yml` | OpenSSF Scorecard, `report-failure.yml` |
+| `.github/workflows/ai-review.yml` | `ai-review.yml` (advisory, needs `AI_API_KEY`) |
+
+It also has `CODEOWNERS`, `dependabot.yml` (14-day cooldown), `LICENSE` (MIT),
+`CLAUDE.md`, and README and AGENTS.md templates to fill in. The common files come
+from `baseline/` itself.
+
+1. Create the repo, lowercase kebab-case, and clone it next to this one:
+
+   ```bash
+   gh repo create Abdel-Abdelaal/NAME --public --description "One sentence" --clone
+   ```
+
+2. Copy the starter and the common baseline files (run from the folder that holds
+   both clones):
+
+   ```bash
+   cp -R .github/baseline/new-repo/. NAME/
+   cp .github/baseline/.gitattributes .github/baseline/.editorconfig .github/baseline/opencode.json NAME/
+   ```
+
+   Python repos also copy the Python baseline:
+
+   ```bash
+   cp .github/baseline/ruff-base.toml .github/baseline/pyrightconfig.base.json .github/baseline/.pre-commit-config.yaml NAME/
+   ```
+
+   Then:
+   - add the repo's languages to `languages` in `security.yml`, for example
+     `'["actions", "python"]'`
+   - add its ecosystems to `dependabot.yml`
+   - add a CI caller such as `python-ci.yml`, with the same pin
+
+3. Fill in `README.md` and `AGENTS.md`, then make the first commit:
+
+   ```bash
+   git -C NAME add -A
+   ```
+
+   ```bash
+   git -C NAME commit -m "chore: start from the fleet starter"
+   ```
+
+   ```bash
+   git -C NAME push -u origin main
+   ```
+
+4. Add the repo to `github-governance/repos.yaml` by PR, with its required checks.
+   Add it to the governance and automation App installations, and set `AI_API_KEY`
+   if it should get AI review.
+5. From then on, every change goes through a PR with a Conventional title.
+
+The next Fleet health run moves the repo from unmanaged to managed and checks its
+files and callers. Settings and rulesets in `repos.yaml` stay desired state until
+the governance apply runs.
+
+There's no GitHub template repo on purpose. A template would be one more repo to
+keep pinned, and its caller pins would drift without a check. Copying from
+`baseline/` keeps one reviewed source.
 
 ## Python service layout
 

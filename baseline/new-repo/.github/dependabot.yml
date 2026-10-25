@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 14
+    groups:
+      compatible:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: build
+      include: scope
+    labels: [dependencies]
+    open-pull-requests-limit: 5
+  # Add one entry per ecosystem the repo uses (uv, pre-commit, gradle, npm),
+  # each with the same 14-day cooldown. Conformance fails without it.
