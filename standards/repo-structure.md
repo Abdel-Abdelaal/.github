@@ -80,8 +80,13 @@ from `baseline/` itself.
    cp .github/baseline/.gitattributes .github/baseline/.editorconfig .github/baseline/opencode.json NAME/
    ```
 
-   Python repos also copy `ruff-base.toml`, `pyrightconfig.base.json` and
-   `.pre-commit-config.yaml`. Then:
+   Python repos also copy the Python baseline:
+
+   ```bash
+   cp .github/baseline/ruff-base.toml .github/baseline/pyrightconfig.base.json .github/baseline/.pre-commit-config.yaml NAME/
+   ```
+
+   Then:
    - add the repo's languages to `languages` in `security.yml`, for example
      `'["actions", "python"]'`
    - add its ecosystems to `dependabot.yml`
