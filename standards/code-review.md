@@ -59,3 +59,9 @@ and give a 422 for free.
 - First response within one working day. Even a short "looking tomorrow" counts.
 - AI review comments follow the same format and are always `non-blocking`, unless a
   human agrees and changes the label. See [AI](ai.md).
+
+Frozen pre-commit workflow analysis uses the same medium-or-higher failure threshold
+as the hosted security gate, plus strict collection so invalid workflow YAML fails.
+Offline mode avoids authenticated API access. Low-severity suggestions remain visible
+for review; intentional immutable tooling checkouts are not replaced by dynamic
+self-repository code merely to remove a suggestion.
