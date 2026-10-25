@@ -1,3 +1,4 @@
 # Handbook has no Python package; keep the generic frozen hooks.
 ruff-base.toml
 pyrightconfig.base.json
+.github/linters/.ruff.toml

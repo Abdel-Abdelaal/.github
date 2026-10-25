@@ -1,6 +1,6 @@
 # AGENTS.md
 
-One sentence on what this repo is and what matters most in it.
+One sentence on what this repository is and what matters most in it.
 
 ## Commands
 - Install:
