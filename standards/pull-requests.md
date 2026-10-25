@@ -29,7 +29,7 @@ and branch deletion, and require all checks to pass on an up-to-date branch.
 2. Self-review the diff on GitHub before asking anyone else. Most problems are caught here.
 3. Mark ready for review only when CI is green.
 4. Respond to every review comment, by changing the code or by replying with a reason.
-   Threads must be resolved before merge.
+    Threads must be resolved before merge.
 5. Squash-merge. Auto-merge is allowed once checks and review pass.
 
 ## What blocks a merge

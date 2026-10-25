@@ -4,10 +4,10 @@ How I write, review and ship code across every repo under
 [@Abdel-Abdelaal](https://github.com/Abdel-Abdelaal). Two jobs:
 
 1. **The handbook** in [`standards/`](standards/): the written rules for commits, PRs,
-   issues, code review, Python code, repo layout, versioning, decisions and AI use.
+    issues, code review, Python code, repo layout, versioning, decisions and AI use.
 2. **Default community files.** GitHub uses the issue templates, PR template,
-   `CONTRIBUTING.md` and `SECURITY.md` in this special `.github` repo for any of my
-   repos that doesn't have its own. Every repo gets them without copying.
+    `CONTRIBUTING.md` and `SECURITY.md` in this special `.github` repo for any of my
+    repos that doesn't have its own. Every repo gets them without copying.
 
 Most rules here are enforced by a tool or a CI check, not by memory. Each standard
 says which. The CI checks live in
@@ -16,7 +16,7 @@ says which. The CI checks live in
 ## The handbook
 
 | Standard | Covers | Built on |
-|---|---|---|
+| --- | --- | --- |
 | [Commits](standards/commits.md) | commit messages, PR titles | [Conventional Commits 1.0](https://www.conventionalcommits.org/) |
 | [Pull requests](standards/pull-requests.md) | size, description, merge flow | [Google eng-practices](https://google.github.io/eng-practices/) |
 | [Code review](standards/code-review.md) | what reviewers look for, comment format | [Google eng-practices](https://google.github.io/eng-practices/review/), [Conventional Comments](https://conventionalcomments.org/) |
@@ -43,7 +43,7 @@ only after the automation App is configured; otherwise that step skips explicitl
 No AI check is required for merging, and no AI workflow can merge or approve.
 See [the isolation design](https://github.com/Abdel-Abdelaal/platform-workflows/blob/main/docs/ai.md).
 
-Maintenance callers now pin platform v1.9.0 (`0b7cd6a33abb89db1743c91d3f11cf98179ebcd2`).
+Maintenance callers now pin platform v1.9.1 (`7b7bea4e50c6ee1b1dcf0d318e4504655678b0b8`).
 Signed AI evidence and measured runs appear in the
 [public AI observatory](https://abdel-abdelaal.github.io/github-governance/). Frozen hook checks
 run where a hook configuration is supported; native Dependabot maintains baseline

@@ -8,7 +8,7 @@ and in pre-commit. Everything in a "How it's enforced" line fails CI.
 ## Tooling
 
 | Tool | Job |
-|---|---|
+| --- | --- |
 | `uv` | Python version, dependencies, lockfile (`uv.lock` is committed) |
 | `ruff format` | formatting. Not up for discussion in review. |
 | `ruff check` | linting: style, bugs, naming, complexity, imports, docstrings |
@@ -19,7 +19,7 @@ and in pre-commit. Everything in a "How it's enforced" line fails CI.
 ## Naming
 
 | Thing | Style | Example |
-|---|---|---|
+| --- | --- | --- |
 | module, package | `snake_case`, short | `links.py` |
 | function, method, variable | `snake_case` | `create_link` |
 | class, exception, type alias | `PascalCase` | `LinkRepository`, `LinkExpiredError` |
@@ -92,7 +92,7 @@ code), ruff `PLR2004` (magic values), `SIM` (simplifiable code).
 ## Size and complexity
 
 | Limit | Value | Rule |
-|---|---|---|
+| --- | --- | --- |
 | cyclomatic complexity per function | 10 | ruff `C901` |
 | arguments per function | 5 | ruff `PLR0913` |
 | branches per function | 12 | ruff `PLR0912` |

@@ -12,7 +12,7 @@ before editing. Scope for this showcase is D:/showcase only.
 ## Glossary
 
 | Name | Meaning |
-|---|---|
+| --- | --- |
 | handbook | written engineering standards in `standards/` |
 | baseline | shared files distributed by pull request |
 | governance | repository settings, audit reports and recurring conformance |
