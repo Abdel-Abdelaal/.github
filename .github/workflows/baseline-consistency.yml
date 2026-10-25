@@ -62,9 +62,9 @@ jobs:
               status=1
             fi
           done < <(git ls-files baseline)
-          # pr, security, conformance, scorecard and ai-review.
-          if [ "$starter_callers" -ne 5 ]; then
-            echo "::error::expected 5 new-repo starter callers, compared $starter_callers"
+          # PR, security, conformance, Scorecard, AI review/maintenance, baseline, stale.
+          if [ "$starter_callers" -ne 8 ]; then
+            echo "::error::expected 8 new-repo starter callers, compared $starter_callers"
             status=1
           fi
           exit "$status"
