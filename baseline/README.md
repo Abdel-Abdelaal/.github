@@ -9,7 +9,7 @@ unknown entries fail closed. Exceptions are visible and reviewed with the repo.
 - Python: Ruff base, strict Pyright base and frozen pre-commit revisions.
 - `labels.yml`: Terraform source reference; fleet label writes remain governance-owned.
 - `new-repo/`: the starter a new repo copies once (callers, CODEOWNERS, Dependabot,
-  LICENSE, templates, scanner policy and all eight shared process workflows).
+  LICENSE, templates, scanner policy and all nine shared process workflows).
   Its workflow copies are checked against root on every PR. It's not in platform-workflows' sync allowlist
   (`FILES` in `tools/baseline.py`), so it's never synced into existing repos; see
   [Starting a new repo](../standards/repo-structure.md#starting-a-new-repo).

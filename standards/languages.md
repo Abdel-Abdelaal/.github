@@ -9,7 +9,7 @@ language statistics, which already exclude vendored and generated code.
 ## What checks which language
 
 | Language | Lint and format | Types | Tests | Code security | Dependencies |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | Python | Ruff (lint + format) | Pyright strict | pytest + coverage ≥90%, Hypothesis | CodeQL `python` | pip-audit, OSV, Dependabot `uv`/`pip` |
 | TypeScript / JavaScript | ESLint + Prettier | the project's `typecheck` script (`tsc`) | the project's `test` script | CodeQL `javascript-typescript` | npm/pnpm/yarn audit, Dependabot `npm` |
 | Kotlin / Java (Android) | ktlint | compiler (Gradle build) | Gradle tests | CodeQL `java-kotlin` | Gradle wrapper validation, Dependabot `gradle` |

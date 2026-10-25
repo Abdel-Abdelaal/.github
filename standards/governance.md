@@ -53,7 +53,7 @@ main-context controller; generated titles may need normalization during review.
 ## Target cadences
 
 | When | What runs | Where findings go |
-|---|---|---|
+| --- | --- | --- |
 | Every PR | PR title, lint, format, types, tests + coverage, Sonar quality gate, CodeQL, dependency review, secret scan, workflow lint (actionlint + zizmor), repo conformance, AI review (advisory) | PR checks and comments |
 | Every PR to `github-governance` | `terraform plan`, posted as a PR comment | PR comment |
 | Merge to `main` | release-please, `terraform apply`, image build and deploy (when CD lands) | releases, deploy status |
@@ -107,7 +107,7 @@ requires the hosted credentials and is not currently available.
 ## Bots and tokens
 
 | Identity | Permissions | Used for |
-|---|---|---|
+| --- | --- | --- |
 | `GITHUB_TOKEN` | per job, least privilege | all normal checks |
 | automation GitHub App | repo-scoped contents/PR/issues write; workflows write only for baseline changes | baseline sync, release-please, AI fix PRs (App PRs trigger CI; `GITHUB_TOKEN` PRs do not) |
 | governance GitHub App | administration: write, plus the above | Terraform in `github-governance` only |

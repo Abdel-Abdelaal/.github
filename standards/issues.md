@@ -9,7 +9,7 @@ Issue forms (`.github/ISSUE_TEMPLATE/`) give each type required fields. Blank is
 are off.
 
 | Form | For | Must include |
-|---|---|---|
+| --- | --- | --- |
 | Bug | something broken | what happened, what was expected, steps to reproduce, version |
 | Feature | new behaviour | the problem it solves, proposed solution, acceptance criteria |
 | Task | refactors, chores, tech debt | goal, acceptance criteria |
@@ -40,7 +40,7 @@ desired state until its configured apply; workflows must skip or dry-run honestl
 when required labels are absent. Baseline label files are reference copies.
 
 | Group | Labels |
-|---|---|
+| --- | --- |
 | Type | `bug`, `enhancement`, `task`, `documentation`, `security`, `dependencies` |
 | Priority | `priority: critical`, `priority: high`, `priority: medium`, `priority: low` |
 | Status | `needs triage`, `blocked`, `help wanted`, `good first issue` |

@@ -20,7 +20,7 @@ Follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0
   what changed.
 
 | Type | Use for | Version bump |
-|---|---|---|
+| --- | --- | --- |
 | `feat` | new behaviour a user or caller can see | minor |
 | `fix` | a bug fix | patch |
 | `perf` | faster or lighter, same behaviour | patch |
@@ -44,7 +44,7 @@ BREAKING CHANGE: clients that treated 404 as "expired" must handle 410.
 ## Footers
 
 | Footer | When |
-|---|---|
+| --- | --- |
 | `Closes #12` | the commit finishes an issue |
 | `Refs #12` | related, but doesn't finish it |
 | `BREAKING CHANGE: ...` | any breaking change |

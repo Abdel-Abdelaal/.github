@@ -3,7 +3,7 @@
 ## Repo types
 
 | Type | Example | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | Service | [shortlink](https://github.com/Abdel-Abdelaal/shortlink) | a deployable app or API |
 | Library | (none yet) | a package other code installs |
 | Platform | [platform-workflows](https://github.com/Abdel-Abdelaal/platform-workflows) | shared CI/CD workflows |
@@ -18,7 +18,7 @@ No `-repo`, `-project`, or `my-`.
 ## Files every repo has
 
 | File | Why |
-|---|---|
+| --- | --- |
 | `README.md` | what it is, how to run it, how to contribute. Follows [Standard Readme](https://github.com/RichardLitt/standard-readme) sections. |
 | `LICENSE` | MIT unless there's a reason not to |
 | `.gitattributes` | `* text=auto eol=lf`, so Windows checkouts don't turn files into CRLF |
@@ -55,9 +55,10 @@ byte-identical to this repo's own and pinned to the same platform-workflows rele
 by full SHA. `Baseline matches root` fails any PR that lets them drift.
 
 | Starter file | Calls |
-|---|---|
+| --- | --- |
 | `.github/workflows/pr.yml` | `pr-title.yml` (Conventional title) |
-| `.github/workflows/security.yml` | `security.yml` (CodeQL, dependency review, secrets, workflow lint) |
+| `.github/workflows/security.yml` | `security.yml` (CodeQL for detected languages, dependency review, secrets, workflow lint) |
+| `.github/workflows/lint.yml` | `lint.yml` (super-linter for every language; PRs gate changed files) |
 | `.github/workflows/conformance-checks.yml` | `conformance.yml` (required files, pins, cooldowns) |
 | `.github/workflows/scorecard.yml` | OpenSSF Scorecard, `report-failure.yml` |
 | `.github/workflows/ai-review.yml` | `ai-review.yml` (advisory, needs `AI_API_KEY`) |
@@ -68,47 +69,47 @@ from `baseline/` itself.
 
 1. Create the repo, lowercase kebab-case, and clone it next to this one:
 
-   ```bash
-   gh repo create Abdel-Abdelaal/NAME --public --description "One sentence" --clone
-   ```
+    ```bash
+    gh repo create Abdel-Abdelaal/NAME --public --description "One sentence" --clone
+    ```
 
 2. Copy the starter and the common baseline files (run from the folder that holds
-   both clones):
+    both clones):
 
-   ```bash
-   cp -R .github/baseline/new-repo/. NAME/
-   cp .github/baseline/.gitattributes .github/baseline/.editorconfig .github/baseline/opencode.json NAME/
-   ```
+    ```bash
+    cp -R .github/baseline/new-repo/. NAME/
+    cp .github/baseline/.gitattributes .github/baseline/.editorconfig .github/baseline/opencode.json NAME/
+    ```
 
-   Python repos also copy the Python baseline:
+    Python repos also copy the Python baseline:
 
-   ```bash
-   cp .github/baseline/ruff-base.toml .github/baseline/pyrightconfig.base.json .github/baseline/.pre-commit-config.yaml NAME/
-   ```
+    ```bash
+    cp .github/baseline/ruff-base.toml .github/baseline/pyrightconfig.base.json .github/baseline/.pre-commit-config.yaml NAME/
+    ```
 
-   Then:
-   - add the repo's languages to `languages` in `security.yml`, for example
-     `'["actions", "python"]'`
-   - add its ecosystems to `dependabot.yml`
-   - add a CI caller such as `python-ci.yml`, with the same pin
+    Then:
+    - leave `languages: auto` in `security.yml`: CodeQL follows the languages the
+      repo contains ([Languages](languages.md))
+    - add its ecosystems to `dependabot.yml`
+    - add a CI caller such as `python-ci.yml`, with the same pin
 
 3. Fill in `README.md` and `AGENTS.md`, then make the first commit:
 
-   ```bash
-   git -C NAME add -A
-   ```
+    ```bash
+    git -C NAME add -A
+    ```
 
-   ```bash
-   git -C NAME commit -m "chore: start from the fleet starter"
-   ```
+    ```bash
+    git -C NAME commit -m "chore: start from the fleet starter"
+    ```
 
-   ```bash
-   git -C NAME push -u origin main
-   ```
+    ```bash
+    git -C NAME push -u origin main
+    ```
 
 4. Add the repo to `github-governance/repos.yaml` by PR, with its required checks.
-   Add it to the governance and automation App installations, and set `AI_API_KEY`
-   if it should get AI review.
+    Add it to the governance and automation App installations, and set `AI_API_KEY`
+    if it should get AI review.
 5. From then on, every change goes through a PR with a Conventional title.
 
 The next Fleet health run moves the repo from unmanaged to managed and checks its

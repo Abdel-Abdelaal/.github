@@ -10,9 +10,9 @@ The rules an AI follows aren't buried in a prompt inside one workflow. They are:
 
 1. **This handbook**, for everything general.
 2. **`AGENTS.md`** in each repo ([agents.md](https://agents.md/) format, read by most
-   coding agents): how to install, test and lint, the layout, the domain glossary, and
-   anything specific to that repo. Tools that look for their own file name (such as
-   `CLAUDE.md`) get a one-line file that points at `AGENTS.md`.
+    coding agents): how to install, test and lint, the layout, the domain glossary, and
+    anything specific to that repo. Tools that look for their own file name (such as
+    `CLAUDE.md`) get a one-line file that points at `AGENTS.md`.
 
 So the AI reviewer in CI, an agent on a laptop and a new human contributor all
 read the same instructions.
@@ -20,7 +20,7 @@ read the same instructions.
 ## Where it runs
 
 | Where | How | Key comes from |
-|---|---|---|
+| --- | --- | --- |
 | CI, on every PR | isolated opencode through platform-workflows | GitHub Actions secret |
 | Locally | opencode CLI in the repo | environment variable in your shell or a git-ignored `.env` |
 | Anywhere else (a VPS, a scheduled job) | the same opencode CLI | that machine's environment or secret store |
@@ -32,7 +32,7 @@ contributors and offline work aren't blocked.
 ## What AI may and may not do
 
 | Allowed | Not allowed |
-|---|---|
+| --- | --- |
 | comment on PRs, using [Conventional Comments](code-review.md#writing-comments), marked `non-blocking` | approve PRs or count towards required reviews |
 | suggest changes as review suggestions | push to `main` or bypass any branch rule |
 | open its own PRs, which then go through the same checks and review | merge anything |
@@ -77,7 +77,7 @@ See [the implemented boundary and its tests](https://github.com/Abdel-Abdelaal/p
 Off-the-shelf AI reviewers exist, and they're the default choice wherever they fit:
 
 | Tool | Model and key | Cost for this account | Fit |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Cursor Bugbot | Cursor's models | needs a paid Cursor plan | not used: can't run on our own key |
 | CodeRabbit | CodeRabbit's models | free for public repos; needs a GitHub App install by the owner | candidate; owner decision |
 | GitHub Copilot code review | GitHub's models | needs a Copilot plan | not used |
