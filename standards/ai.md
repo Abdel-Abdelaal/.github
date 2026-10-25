@@ -21,7 +21,7 @@ read the same instructions.
 
 | Where | How | Key comes from |
 |---|---|---|
-| CI, on every PR | opencode through platform-workflows (planned) | GitHub Actions secret |
+| CI, on every PR | isolated opencode through platform-workflows | GitHub Actions secret |
 | Locally | opencode CLI in the repo | environment variable in your shell or a git-ignored `.env` |
 | Anywhere else (a VPS, a scheduled job) | the same opencode CLI | that machine's environment or secret store |
 
@@ -49,8 +49,25 @@ blocking one by agreeing with it.
 
 ## Runner configuration
 
-The portable runner is [opencode](https://opencode.ai/docs/). Workflows will use
-`AI_MODEL` plus the provider's key environment variable. For a custom compatible
-endpoint, use `AI_BASE_URL` and `AI_API_KEY`. Provider and model remain an owner
-decision. Read-only review denies writes and arbitrary shell execution. Fix runs
-may propose one PR but cannot merge. Fork and Dependabot PRs do not receive keys.
+The runner uses locked [OpenCode](https://opencode.ai/docs/) and Xiaomi MiMo
+2.6 Flash (`mimo/mimo-v2.6-flash`). `AI_API_KEY` is the named secret;
+`AI_BASE_URL` is an optional repository variable (the Amsterdam Token Plan endpoint
+is the reviewed default). Both primary and auxiliary models are fixed to Flash.
+
+All model tools are denied. Trusted code attaches a bounded snapshot of tracked
+source, the diff and glossary as untrusted data. The model does not need filesystem
+or network tools to read that attachment. Project plugins, external skills and
+agent configuration are disabled in a clean temporary directory. GitHub/App tokens
+never enter the provider process. Source is secret-scanned before sending context.
+
+A separate publisher validates bounded JSON, verifies added-line locations and
+updates one sticky comment plus a neutral check. It creates no blocking review
+threads. Model suggestions can be wrong; an operator verifies them against source.
+Malformed output fails visibly after bounded attempts without printing raw output.
+
+Weekly audits update one health issue. Fix and monthly standards workflows need the
+automation App and otherwise skip explicitly. Validated patches have strict file,
+size and symlink limits, run tests without provider/App credentials and become draft
+PRs through a separate App job. They never approve or merge.
+
+See [the implemented boundary and its tests](https://github.com/Abdel-Abdelaal/platform-workflows/blob/main/docs/ai.md).
