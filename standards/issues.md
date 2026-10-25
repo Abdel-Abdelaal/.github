@@ -34,8 +34,10 @@ Security problems are never filed as public issues. See [SECURITY.md](../SECURIT
 
 ## Labels
 
-Defined once in [`labels.yml`](../.github/labels.yml) and bootstrapped in every repo. Phase G will manage labels with Terraform
-in `github-governance`; the YAML remains the source of truth.
+Defined once in [`labels.yml`](../.github/labels.yml). Terraform in
+`github-governance` reads a reviewed source revision. Newly added labels remain
+desired state until its configured apply; workflows must skip or dry-run honestly
+when required labels are absent. Baseline label files are reference copies.
 
 | Group | Labels |
 |---|---|
@@ -43,6 +45,7 @@ in `github-governance`; the YAML remains the source of truth.
 | Priority | `priority: critical`, `priority: high`, `priority: medium`, `priority: low` |
 | Status | `needs triage`, `blocked`, `help wanted`, `good first issue` |
 | Resolution | `duplicate`, `wontfix`, `invalid` |
+| Automation | `stale`, `autorelease: pending`, `autorelease: tagged` |
 
 New issues get `needs triage` from their form. Triage means: confirm it's real, set a
 priority, remove `needs triage`.
