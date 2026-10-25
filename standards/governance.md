@@ -42,7 +42,10 @@ are reviewed desired state, awaiting hosted-state migration and the governance A
 
 HCP/App reconciliation, Sonar analysis, maintenance App PR creation, access metadata
 and live deployment must not be described as active until configured and verified.
-Missing setup skips explicitly. There is currently no hosted settings drift
+Missing setup skips explicitly. Three read-only fleet reports run live in
+`github-governance` today: the weekly dependency inventory and fleet health, and
+the monthly access review. On the workflow token, the access review marks
+admin-only sections as skipped. There is currently no hosted settings drift
 coverage or automatic apply. Dependabot version/security PR creation works without
 maintenance App credentials. Auto-merge stays disabled pending a safe, verified
 main-context controller; generated titles may need normalization during review.
@@ -57,7 +60,8 @@ main-context controller; generated titles may need normalization during review.
 | Nightly | full CI on `main`, vulnerability scan of the lockfile (pip-audit), Terraform drift check | issue labelled `governance` |
 | Weekly (Monday) | Dependabot (14-day cooldown), baseline file sync, pre-commit hook updates, CodeQL full scan, OpenSSF Scorecard, AI health audit of the whole codebase, stale issue/PR sweep | PRs, one "Weekly health report" issue per repo |
 | Monthly (1st) | AI review of the handbook against current tools and real practice, access review (collaborators, apps, deploy keys, secrets ages) | PR to `.github`, issue in `github-governance` |
-| Weekly (after audits) | fleet summary: open governance issues, failing scheduled runs, Scorecard and Sonar scores per repo | pinned "Fleet health" issue in `github-governance` |
+| Weekly (Monday 06:30) | dependency inventory: every pinned dependency and upstream project, with archive status, last push and newest release | "Dependency inventory" issue in `github-governance` |
+| Weekly (Monday 06:45) | fleet summary: live vs desired required checks, failing latest runs, open governance issues, open PRs, Scorecard score per repo | "Fleet health" issue in `github-governance` |
 
 Scheduled jobs never fail silently: a failing schedule opens or updates an issue.
 
@@ -79,6 +83,12 @@ Scheduled jobs never fail silently: a failing schedule opens or updates an issue
 - **Baseline files:** a weekly job copies `.github/baseline/` into each repo and opens
   a PR if anything differs. Editing a baseline file in one repo directly gets
   reverted by the next sync, unless the repo is listed as an exception.
+- **Upstream health:** Dependabot only says a newer version exists. The weekly
+  dependency inventory also flags upstream projects that are archived, haven't been
+  pushed to in a year, or are base images without a digest pin, so an abandoned tool
+  gets replaced before it becomes a risk.
+- **Baseline drift inside `.github`:** the `Baseline matches root` check fails any PR
+  where a baseline file and the handbook repo's own copy differ.
 - **The standards themselves:** a monthly AI pass proposes handbook updates as a PR.
   A human merges or closes it.
 

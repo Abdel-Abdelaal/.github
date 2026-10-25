@@ -71,3 +71,18 @@ size and symlink limits, run tests without provider/App credentials and become d
 PRs through a separate App job. They never approve or merge.
 
 See [the implemented boundary and its tests](https://github.com/Abdel-Abdelaal/platform-workflows/blob/main/docs/ai.md).
+
+## Existing review bots, and why this one is custom
+
+Off-the-shelf AI reviewers exist, and they're the default choice wherever they fit:
+
+| Tool | Model and key | Cost for this account | Fit |
+|---|---|---|---|
+| Cursor Bugbot | Cursor's models | needs a paid Cursor plan | not used: can't run on our own key |
+| CodeRabbit | CodeRabbit's models | free for public repos; needs a GitHub App install by the owner | candidate; owner decision |
+| GitHub Copilot code review | GitHub's models | needs a Copilot plan | not used |
+| [PR-Agent](https://github.com/The-PR-Agent/pr-agent) (open source) | any provider, including an OpenAI-compatible endpoint | free; uses our MiMo key | trial planned as a second advisory reviewer on shortlink |
+
+The platform runner exists because none of these keep GitHub tokens and the model in
+separate processes. The trial result is recorded as an ADR in platform-workflows,
+and whichever reviewer finds more real issues stays.
