@@ -46,11 +46,12 @@ when required labels are absent. Baseline label files are reference copies.
 | Status | `needs triage`, `blocked`, `help wanted`, `good first issue` |
 | Resolution | `duplicate`, `wontfix`, `invalid` |
 | Automation | `stale`, `autorelease: pending`, `autorelease: tagged` |
-| Agent | `agent:ready`, `agent:running`, `agent:review`, `agent:parked`, `agent:failed` |
+| Agent | `agent:proposed`, `agent:ready`, `agent:running`, `agent:review`, `agent:parked`, `agent:failed` |
 
 The `agent:*` labels are the task states of
 [agent-dispatcher](https://github.com/Abdel-Abdelaal/agent-dispatcher). Only the owner
 adds `agent:ready`; the controller ignores it from anyone else and sets the rest.
+Weekly AI audits open `agent:proposed` tickets; adding `agent:ready` accepts one.
 
 New issues get `needs triage` from their form. Triage means: confirm it's real, set a
 priority, remove `needs triage`.
