@@ -107,7 +107,7 @@ requires the hosted credentials and is not currently available.
 
 ## Bots and tokens
 
-| Identity | Installation grant / job token scope | Used for |
+| Identity | Installation grant / job token scope | Authorized purpose |
 | --- | --- | --- |
 | `GITHUB_TOKEN` | per job, least privilege | all normal checks |
 | maintenance GitHub App (`BOT_APP_*`) | metadata read; repository-wide contents/PR/issues/workflows write capabilities | baseline sync, release-please and AI fix PRs through normal protection (App PRs trigger CI; `GITHUB_TOKEN` PRs do not) |
@@ -116,11 +116,13 @@ requires the hosted credentials and is not currently available.
 | AI API key | none on GitHub | AI review, audit and fixes |
 
 The maintenance App is the identity called the "automation App" elsewhere in this
-handbook. It is separate from the enrollment and governance identities, not an
-additional automation App. It
-was installed with owner approval on 30 October 2026.
+handbook, `README.md`, `baseline/README.md` and `baseline/new-repo/README.md`.
+It is separate from the enrollment and governance identities, not an additional
+automation App. It was installed with owner approval on 30 October 2026.
 Owner approval covers an all-repositories installation, including current and
-future private repositories. Caller credential provisioning remains public-only.
+future private repositories. BOT_APP_ID/BOT_APP_KEY are provisioned only as secrets
+in public caller repositories; private caller repositories are excluded.
+The table describes authorized purposes, not evidence that every flow is active.
 Its credentials are configured in current public callers; the
 [verified release run](https://github.com/Abdel-Abdelaal/platform-workflows/actions/runs/41056849315)
 opened [App-authored proposal #88](https://github.com/Abdel-Abdelaal/platform-workflows/pull/88).
@@ -132,7 +134,9 @@ The release-please job in
 authenticates as the maintenance App. The telemetry-version correction in
 [platform proposal #89](https://github.com/Abdel-Abdelaal/platform-workflows/pull/89)
 requests workflow-write in a token limited to that job's repository, to update
-annotated version fields in `ai.yml`. That permission is not a path restriction;
+annotated version fields in `ai.yml`. The installation grant covers installed
+repositories; each job requests a token restricted to its target repository and
+needed permissions. That permission is not a path restriction;
 workflow edits are proposed on release PR branches, not pushed directly to main.
 The jobs do not invoke bypass operations. Required checks and branch protection
 are verified per target; App installation alone neither supplies protection nor
@@ -143,9 +147,12 @@ The
 uses ENROLLMENT_APP_ID/ENROLLMENT_APP_KEY stored in platform-workflows. It limits
 its installation token to discovered public targets. Secrets write provisions a
 missing AI_API_KEY through encrypted input; it does not read stored secret values
-or substitute enrollment keys for maintenance credentials. Automatic BOT_APP_ID/BOT_APP_KEY provisioning is
-[proposed separately](https://github.com/Abdel-Abdelaal/platform-workflows/pull/90),
-not established by the installation alone.
+or substitute enrollment keys for maintenance credentials.
+Automatic BOT_APP_ID/BOT_APP_KEY provisioning was
+[merged separately](https://github.com/Abdel-Abdelaal/platform-workflows/pull/90).
+The [verified apply run](https://github.com/Abdel-Abdelaal/platform-workflows/actions/runs/41069126108)
+completed for seven existing public callers. This does not establish a new
+repository's destination secret writes or a completed platform release rollout.
 
 No personal access tokens. App private keys and the AI key are repository secrets,
 subject to a ninety-day rotation policy. GitHub secret `updated_at` measures the
