@@ -107,12 +107,12 @@ requires the hosted credentials and is not currently available.
 
 ## Bots and tokens
 
-| Identity | Permissions | Used for |
+| Identity | Installation grant / job token scope | Used for |
 | --- | --- | --- |
 | `GITHUB_TOKEN` | per job, least privilege | all normal checks |
 | maintenance GitHub App (`BOT_APP_*`) | metadata read; repository-wide contents/PR/issues/workflows write capabilities | baseline sync, release-please and AI fix PRs through normal protection (App PRs trigger CI; `GITHUB_TOKEN` PRs do not) |
 | enrollment GitHub App (`ENROLLMENT_APP_*`) | metadata read; contents/PR/workflows/secrets write | trusted public enrollment controller in platform-workflows |
-| governance GitHub App | administration: write, plus the above | Terraform in `github-governance` only |
+| governance GitHub App | administration/contents/issues/PR/environments write; metadata and secret-name/age read | Terraform in `github-governance` only |
 | AI API key | none on GitHub | AI review, audit and fixes |
 
 The maintenance App is the identity called the "automation App" elsewhere in this
@@ -143,7 +143,7 @@ The
 uses ENROLLMENT_APP_ID/ENROLLMENT_APP_KEY stored in platform-workflows. It limits
 its installation token to discovered public targets. Secrets write provisions a
 missing AI_API_KEY through encrypted input; it does not read stored secret values
-or substitute enrollment keys for maintenance credentials. Automatic maintenance-pair provisioning is
+or substitute enrollment keys for maintenance credentials. Automatic BOT_APP_ID/BOT_APP_KEY provisioning is
 [proposed separately](https://github.com/Abdel-Abdelaal/platform-workflows/pull/90),
 not established by the installation alone.
 
