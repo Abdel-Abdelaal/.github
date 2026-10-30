@@ -40,8 +40,8 @@ operator bootstrap. Conformance passes on all four repos, and shortlink's first
 container release has verified public provenance/SBOM. Additional required contexts
 are reviewed desired state, awaiting hosted-state migration and the governance App.
 
-HCP/App reconciliation, Sonar analysis, maintenance App PR creation, access metadata
-and live deployment must not be described as active until configured and verified.
+HCP/App reconciliation, Sonar analysis, access metadata and live deployment must
+not be described as active until configured and verified.
 Missing setup skips explicitly. Three read-only fleet reports run live in
 `github-governance` today: the weekly dependency inventory, the daily fleet health,
 and the monthly access review. On the workflow token, the access review marks
@@ -109,9 +109,22 @@ requires the hosted credentials and is not currently available.
 | Identity | Permissions | Used for |
 | --- | --- | --- |
 | `GITHUB_TOKEN` | per job, least privilege | all normal checks |
-| automation GitHub App | repo-scoped contents/PR/issues write; workflows write only for baseline changes | baseline sync, release-please, AI fix PRs (App PRs trigger CI; `GITHUB_TOKEN` PRs do not) |
+| automation GitHub App | repo-scoped contents/PR/issues write; workflows write for reviewed baseline and generated release metadata changes | baseline sync, release-please, AI fix PRs (App PRs trigger CI; `GITHUB_TOKEN` PRs do not) |
 | governance GitHub App | administration: write, plus the above | Terraform in `github-governance` only |
 | AI API key | none on GitHub | AI review, audit and fixes |
+
+The separate maintenance App was installed with owner approval on 30 October 2026.
+Its credentials are configured in current public callers; the
+[verified release run](https://github.com/Abdel-Abdelaal/platform-workflows/actions/runs/41056849315)
+opened [App-authored proposal #88](https://github.com/Abdel-Abdelaal/platform-workflows/pull/88).
+That proves proposal creation, not release publication, fleet rollout or successful
+AI fix/baseline execution.
+
+Release generation may request workflow-write for its own repository to update
+annotated telemetry version fields in `ai.yml`. That permission is not a path
+restriction; the generated changes still pass normal protected PR checks and
+review. Enrollment uses a separate App identity and never substitutes its keys
+for maintenance credentials.
 
 No personal access tokens. App private keys and the AI key are repository secrets,
 subject to a ninety-day rotation policy. GitHub secret `updated_at` measures the
