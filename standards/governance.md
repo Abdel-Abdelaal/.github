@@ -115,9 +115,12 @@ requires the hosted credentials and is not currently available.
 | governance GitHub App | administration: write, plus the above | Terraform in `github-governance` only |
 | AI API key | none on GitHub | AI review, audit and fixes |
 
-The maintenance App implements the existing automation role; it is separate from
-the enrollment and governance identities, not an additional automation App. It
+The maintenance App is the identity called the "automation App" elsewhere in this
+handbook. It is separate from the enrollment and governance identities, not an
+additional automation App. It
 was installed with owner approval on 30 October 2026.
+Owner approval covers an all-repositories installation, including current and
+future private repositories. Caller credential provisioning remains public-only.
 Its credentials are configured in current public callers; the
 [verified release run](https://github.com/Abdel-Abdelaal/platform-workflows/actions/runs/41056849315)
 opened [App-authored proposal #88](https://github.com/Abdel-Abdelaal/platform-workflows/pull/88).
@@ -130,13 +133,17 @@ authenticates as the maintenance App. The telemetry-version correction in
 [platform proposal #89](https://github.com/Abdel-Abdelaal/platform-workflows/pull/89)
 requests workflow-write in a token limited to that job's repository, to update
 annotated version fields in `ai.yml`. That permission is not a path restriction;
-the generated changes still pass normal protected PR checks and review.
+workflow edits are proposed on release PR branches, not pushed directly to main.
+The jobs do not invoke bypass operations. Required checks and branch protection
+are verified per target; App installation alone neither supplies protection nor
+proves enforcement.
 
 The
 [public enrollment controller](https://github.com/Abdel-Abdelaal/platform-workflows/blob/main/.github/workflows/fleet-enrollment.yml)
 uses ENROLLMENT_APP_ID/ENROLLMENT_APP_KEY stored in platform-workflows. It limits
-its installation token to discovered public targets and never substitutes those
-keys for maintenance credentials. Automatic maintenance-pair provisioning is
+its installation token to discovered public targets. Secrets write provisions a
+missing AI_API_KEY through encrypted input; it does not read stored secret values
+or substitute enrollment keys for maintenance credentials. Automatic maintenance-pair provisioning is
 [proposed separately](https://github.com/Abdel-Abdelaal/platform-workflows/pull/90),
 not established by the installation alone.
 
