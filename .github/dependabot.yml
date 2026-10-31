@@ -1,7 +1,12 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: /
+    # baseline/ holds copies of these workflows that must stay identical,
+    # so they are bumped in the same PR as the root files.
+    directories:
+      - /
+      - /baseline
+      - /baseline/new-repo
     schedule:
       interval: weekly
       day: monday
