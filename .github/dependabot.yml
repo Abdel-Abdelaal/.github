@@ -21,7 +21,10 @@ updates:
     labels: [dependencies]
     open-pull-requests-limit: 5
   - package-ecosystem: pre-commit
-    directory: /baseline
+    # The root config and its baseline copy must stay identical.
+    directories:
+      - /
+      - /baseline
     schedule:
       interval: weekly
       day: monday
