@@ -15,6 +15,8 @@ updates:
     groups:
       compatible:
         update-types: [minor, patch]
+        # One PR per dependency covering every directory above.
+        group-by: dependency-name
     commit-message:
       prefix: build
       include: scope
@@ -32,7 +34,9 @@ updates:
       default-days: 14
     groups:
       compatible-hooks:
+        patterns: ["*"]
         update-types: [minor, patch]
+        group-by: dependency-name
     commit-message:
       prefix: build
       include: scope
