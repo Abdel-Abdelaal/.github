@@ -60,6 +60,10 @@ or network tools to read that attachment. Project plugins, external skills and
 agent configuration are disabled in a clean temporary directory. GitHub/App tokens
 never enter the provider process. Source is secret-scanned before sending context.
 
+The provider's own model key is the one exception, here and in agent-dispatcher
+runs: the provider CLI needs it to call the model, so it is in that process's
+environment. Use a key that can only call models, and no other credential.
+
 A separate publisher validates bounded JSON, verifies added-line locations and
 updates one sticky comment plus a neutral check. It creates no blocking review
 threads. Model suggestions can be wrong; an operator verifies them against source.
