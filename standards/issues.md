@@ -53,5 +53,21 @@ The `agent:*` labels are the task states of
 adds `agent:ready`; the controller ignores it from anyone else and sets the rest.
 Weekly AI audits open `agent:proposed` tickets; adding `agent:ready` accepts one.
 
+Keep agent tasks small and checkable: one outcome, one PR, and a 'Done when' a
+reviewer can verify from the diff.
+
+A good `agent:ready` issue:
+
+```text
+Title: Expired links return 410
+
+What
+Requests for a short code whose link has expired return 200 with the old target.
+
+Done when
+- A link that expired yesterday returns 410 Gone.
+- A test covers it.
+```
+
 New issues get `needs triage` from their form. Triage means: confirm it's real, set a
 priority, remove `needs triage`.
