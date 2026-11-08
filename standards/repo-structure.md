@@ -32,7 +32,7 @@ No `-repo`, `-project`, or `my-`.
 Conformance (platform-workflows v1.6.0, `REQUIRED` in `tools/conformance.py`) fails
 a PR when any of these is missing. Fleet health in
 [github-governance](https://github.com/Abdel-Abdelaal/github-governance) checks them
-daily on `main`, together with the five callers below.
+daily on `main`, together with the nine callers below.
 
 `CONTRIBUTING.md`, `SECURITY.md`, issue templates and the PR template come from this
 `.github` repo automatically. A repo only adds its own copy to override one.
@@ -62,6 +62,9 @@ by full SHA. `Baseline matches root` fails any PR that lets them drift.
 | `.github/workflows/conformance-checks.yml` | `conformance.yml` (required files, pins, cooldowns) |
 | `.github/workflows/scorecard.yml` | OpenSSF Scorecard, `report-failure.yml` |
 | `.github/workflows/ai-review.yml` | `ai-review.yml` (advisory, needs `AI_API_KEY`) |
+| `.github/workflows/ai-maintenance.yml` | `ai-audit.yml` then `ai-fix.yml` (weekly, needs `AI_API_KEY`, `BOT_APP_ID`, `BOT_APP_KEY`) |
+| `.github/workflows/baseline.yml` | `baseline-sync.yml` (weekly baseline update, needs `BOT_APP_ID`, `BOT_APP_KEY`) |
+| `.github/workflows/stale-items.yml` | `stale.yml` (weekly stale issues and PRs, dry-run on manual dispatch) |
 
 It also has `CODEOWNERS`, `dependabot.yml` (14-day cooldown), `LICENSE` (MIT),
 `CLAUDE.md`, and README and AGENTS.md templates to fill in. The common files come
