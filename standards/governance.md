@@ -68,11 +68,14 @@ Scheduled jobs never fail silently: a failing schedule opens or updates an issue
 
 ## Staying current
 
-- **Dependencies and actions:** Dependabot in every repo for `uv`, `github-actions`,
-  `docker` and `terraform`, weekly, with a **14-day cooldown** so brand-new releases
-  (a common window for compromised packages) are deferred. Security updates do not
-  wait for that version-update cooldown; they still pass normal checks and review.
-  Patch/minor auto-merge is a gated target, currently disabled. Majors stay manual.
+- **Dependencies and actions:** Dependabot in every repo, for each ecosystem that
+  repo actually uses (this repo: `github-actions` and `pre-commit`; `uv` in Python
+  repos, `docker` where images are built, `terraform` where infra lives; one entry
+  per ecosystem as the new-repo template says), weekly, with a **14-day cooldown** so
+  brand-new releases (a common window for compromised packages) are deferred.
+  Security updates do not wait for that version-update cooldown; they still pass
+  normal checks and review. Patch/minor auto-merge is a gated target, currently
+  disabled. Majors stay manual.
 - **Pinned SHAs** are updated by Dependabot, which rewrites the SHA and the version comment.
 - **Reusable workflows:** repos pin full release commit SHAs with version comments.
   Dependabot proposes platform release updates, including majors, as reviewed PRs.
