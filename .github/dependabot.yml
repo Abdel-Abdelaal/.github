@@ -1,7 +1,12 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: /
+    # baseline/ holds copies of these workflows that must stay identical,
+    # so they are bumped in the same PR as the root files.
+    directories:
+      - /
+      - /baseline
+      - /baseline/new-repo
     schedule:
       interval: weekly
       day: monday
@@ -10,13 +15,18 @@ updates:
     groups:
       compatible:
         update-types: [minor, patch]
+        # One PR per dependency covering every directory above.
+        group-by: dependency-name
     commit-message:
       prefix: build
       include: scope
     labels: [dependencies]
     open-pull-requests-limit: 5
   - package-ecosystem: pre-commit
-    directory: /baseline
+    # The root config and its baseline copy must stay identical.
+    directories:
+      - /
+      - /baseline
     schedule:
       interval: weekly
       day: monday
@@ -24,7 +34,9 @@ updates:
       default-days: 14
     groups:
       compatible-hooks:
+        patterns: ["*"]
         update-types: [minor, patch]
+        group-by: dependency-name
     commit-message:
       prefix: build
       include: scope
