@@ -40,6 +40,20 @@ operator bootstrap. Conformance passes on all four repos, and shortlink's first
 container release has verified public provenance/SBOM. Additional required contexts
 are reviewed desired state, awaiting hosted-state migration and the governance App.
 
+Dependency review enforces, as
+[ADR 0002](../docs/decisions/0002-dependabot-and-shared-security.md) planned:
+
+- The shared security workflow's warn-only window ended on 2026-10-31. No caller
+  overrides the date.
+- It now fails a PR on a high-severity finding or a license outside the allowed
+  list.
+- `security / Dependency review` is a required check on `main` in six of the
+  seven repos in `repos.yaml`. `youtube-knowledge-distillation` has no required
+  checks yet.
+
+This was verified on 2026-11-09 from the live rulesets and a PR run that logged
+`warn-only: false`.
+
 HCP/App reconciliation, Sonar analysis, maintenance App PR creation across the
 fleet, access metadata and live deployment must not be described as active until
 configured and verified.
